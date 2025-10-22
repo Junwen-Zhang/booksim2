@@ -6,3 +6,11 @@
 
 *.o
 *.d
+
+# SST Generated Files
+.deps/
+.libs/
+.dirstamp
+*.in
+*.la
+*.lo

@@ -1,0 +1,149 @@
+// $Id$
+
+// Copyright (c) 2007-2015, Trustees of The Leland Stanford Junior University
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// Redistributions of source code must retain the above copyright notice, this
+// list of conditions and the following disclaimer.
+// Redistributions in binary form must reproduce the above copyright notice,
+// this list of conditions and the following disclaimer in the documentation
+// and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+//A flattened butterfly configurate file with many tweaks from the
+//default settings. 
+
+
+// Flow control
+// Total number of VCs must match the above assignments
+num_vcs     = 2;
+vc_buf_size = 128;
+
+wait_for_tail_credit = 0;
+
+//
+// Router architecture
+//
+vc_allocator = islip;
+//vc_allocator = select; 
+sw_allocator = islip;
+//sw_allocator = select;
+//alloc_iters = 1;
+alloc_iters  = 3;
+//priority = age;
+priority = none;
+
+credit_delay   = 0;
+routing_delay  = 1;
+vc_alloc_delay = 1;
+sw_alloc_delay = 1;
+st_final_delay = 1;
+
+input_speedup     = 1;
+output_speedup    = 1;
+internal_speedup  = 1.6;
+
+// TRAFFIC
+warmup_periods = 3; //3
+sample_period  = 1000; //2000
+max_samples = 10; //10
+sim_count     = 1;
+//traffic = uniform;
+traffic = bitcomp;
+//traffic = swap2;
+//traffic = uniform_half;
+seed	= 0;
+perm_seed = 0;
+
+// DYNAMIC TRAFFIC
+//traffic1	= uniform;
+//traffic2	= bitcomp;
+
+//traffic1	= bitcomp;
+//traffic2	= uniform;
+
+//traffic_change_time = 3000;
+
+// Flatfly 
+//
+// #node = k^(n+1)
+//
+// x, y, specifies the arrangement of routers in x and y dim
+// xr, yr specifiies the arayment of clients in a router
+//
+topology = flatfly;
+subnets = 1;
+
+
+c  = 16; //9, 16, 25 
+k  = 16; //9, 16, 25
+n  = 2;
+
+x  = 16; //9, 16, 25
+y  = 16; //9, 16, 25
+xr = 16; //9, 16, 25
+yr = 1;
+
+//
+// Routing
+//
+//routing_function = ran_min;
+//routing_function = valiant;
+//routing_function = ugal;
+//routing_function = ugal_inflight_avg;
+//routing_function = par;
+//routing_function = par_inflight_avg;
+routing_function = dgb;
+
+//1: batch mode, 0: injection mode
+use_read_write = 0;
+
+//for injection mode
+packet_size = 1;
+injection_rate = 0.2;
+injection_rate_uses_flits = 1;
+
+//for batch mode
+read_request_size=1;
+write_request_size=1;
+read_reply_size=1;
+write_reply_size=1;
+
+read_request_begin_vc  = 0;
+read_request_end_vc    = 3;
+write_reply_begin_vc   = 4;
+write_reply_end_vc     = 7;
+read_reply_begin_vc    = 4;
+read_reply_end_vc      = 7;
+write_request_begin_vc = 0;
+write_request_end_vc   = 3;
+
+//latency: drains all packet, throughput:no drain?
+sim_type = latency;
+watch_out = -;
+
+//Ignore channel latency
+use_noc_latency = 0;
+
+//Dump File
+//param_data_out = param_data.report;
+
+//RL specific configuration
+//n_piggyback = 1;
+
+//CAUTION: Recommended value is 500
+latency_thres = 500.0;

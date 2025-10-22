@@ -14,3 +14,13 @@
 *.in
 *.la
 *.lo
+
+# Build artifacts
+Makefile
+autom4te.cache/
+config.log
+config.status
+
+# Backup files
+*.bak
+*.orig
